@@ -17,6 +17,8 @@ export const getImageResize = async (file: any) => {
         const newName = `${fileName}-${size.width}x${size.height}.jpeg`;
         return {
           name: newName,
+          width: size.width,
+          height: size.height,
           image: await resizeImage(imgBuffer, size.width, size.height),
         };
       })
@@ -27,7 +29,7 @@ export const getImageResize = async (file: any) => {
         const imageRef = ref(firebaseStorage, item.name);
         const metatype = { contentType: mimType, name: item.name };
         await uploadBytes(imageRef, item.image, metatype);
-        return { id: index + 1, url: await getDownloadURL(imageRef) };
+        return { ...item, id: index + 1, url: await getDownloadURL(imageRef) };
       })
     );
     return urls;

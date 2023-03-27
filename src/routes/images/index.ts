@@ -10,9 +10,9 @@ const upload = multer({ storage: memoStorage });
 router.post("/", upload.single("file"), async (req, res, next) => {
   try {
     const { file } = req.body;
-    const urls = await getImageResize(file);
+    const images = await getImageResize(file);
     res.json({
-      urls,
+      images,
     });
   } catch (error: any) {
     res.status(500).json({
