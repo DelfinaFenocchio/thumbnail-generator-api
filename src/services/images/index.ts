@@ -9,12 +9,12 @@ export const getImageResize = async (file: any) => {
     let parts = file.split(";");
     let mimType = parts[0].split(":")[1];
     let imageData = parts[1].split(",")[1];
-    const fileName = `thumbnailGenerator-${Date.now()}.jpeg`;
+    const fileName = `thumbnailGenerator-${Date.now()}`;
     const imgBuffer = Buffer.from(imageData, "base64");
 
     const resizedImages = await Promise.all(
       IMAGE_SIZES.map(async (size) => {
-        const newName = `${fileName}-${size.width}x${size.height}`;
+        const newName = `${fileName}-${size.width}x${size.height}.jpeg`;
         return {
           name: newName,
           image: await resizeImage(imgBuffer, size.width, size.height),
